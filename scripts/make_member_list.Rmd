@@ -1,0 +1,73 @@
+選手名のリスト作成
+==
+```{r}
+library(rvest)
+library(pipeR)
+library(dplyr)
+```
+
+
+```{r}
+## チーム名のリスト
+central_team_list = c("G", "T", "C", "D", "DB", "Ys", "YB")
+pacific_team_list = c("H", "Bs", "F", "L", "E", "M")
+team_list = c(central_team_list, pacific_team_list)
+
+### 年度
+year_list = 2007:2016
+
+## 選手データ格納用
+year_player_table = data.frame(NULL)
+
+## 年度, チーム別に選手情報を取得して、テーブルに格納する 
+for(team in team_list){
+  for(year in year_list){
+    
+    paste("year: ", year, ", team: ", team, sep="") %>% 
+      print
+    
+    ## セリーグかパリーグかのパラメータ 
+    league_num = ifelse(team %in% central_team_list, 0, 1)
+    
+    ## 2015年ジャイアンツの選手一覧ページのURL
+    url=paste("http://lcom.sakura.ne.jp/NulData/php/stat_disp/stat_disp.php?y=", 
+              year, 
+              "&leg=",
+              league_num,
+              "&tm=", 
+              team, 
+              "&fp=0&dn=1&dk=0",
+              sep=""
+              )
+    ## htmlのダウンロード
+    html = read_html(url)
+    
+    ## htmlから、選手名テーブルを抜き出す
+    member_table <-
+      html %>% 
+      html_node(xpath = "/html/body/div/table[4]") %>% 
+      html_table(fill=TRUE) 
+    
+    ## テーブルから、最初の行と最後の行を除く
+    member_table <- 
+      member_table[,1:32] %>% 
+      dplyr::filter(背番 != "合計") %>% 
+      dplyr::filter(背番 != "背番") %>% 
+      dplyr::filter(背番 != "投手打撃成績") %>% 
+      mutate(year = year) %>% 
+      mutate(team = team)
+    
+    ## 格納する
+    year_player_table = rbind(year_player_table, member_table)
+    
+    ## 1秒待つ
+    Sys.sleep(1)
+  }
+}
+
+## データの書き出し 
+write.csv(year_player_table, "year_member_list.csv", row.names=FALSE, quote=FALSE)
+```
+
+```{r}
+```
