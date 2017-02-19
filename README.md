@@ -9,11 +9,13 @@ http://lcom.sakura.ne.jp/NulData/2015/Central/G/f/25_stat.htm
 
 * Todo
 
-- チーム, 年度別の選手名と背番号データの作成
+- [終了] チーム, 年度別の選手名と背番号データの作成
 -- URLを作成するため
-- 年度,選手別の打席結果htmlのダウンロード
+-- data/year_player_table.csv
+- [レビュー中] 年度,選手別の打席結果htmlのダウンロード
+-- data/player_gameresult.csv
 -- 移籍した場合は? プレーオフは?
-- htmlをパースして、整形してcsvにする
+- 打席ごとのデータに整形
 
 
 
