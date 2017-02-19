@@ -19,8 +19,6 @@ http://lcom.sakura.ne.jp/NulData/2015/Central/G/f/25_stat.htm
   　- 2007年以降なら問題無し
  - プレーオフは?
  　- データに入っていないから、気にしなくていい
-- 打席ごとのデータに整形
- - data/player_gameresult.csvで、詳細列をなんやかんやして別の行にする
-
-
-
+- [レビュー中]打席ごとのデータに整形
+ - data/player_atbatresult.csv
+ - 対戦相手の列とか必要かな...?

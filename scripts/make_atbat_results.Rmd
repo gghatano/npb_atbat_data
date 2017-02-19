@@ -10,7 +10,7 @@ library(stringr)
 
 
 ```{r}
-member_table <- read.csv("year_member_list.csv")
+member_table <- read.csv("../data/year_member_list.csv")
 
 ## チーム
 central_team_list <- c("G", "T", "C", "D", "DB", "Ys", "YB")
@@ -101,9 +101,14 @@ for(num in 1:size_member_table_for_url){
 ## 日付を作る
 player_data <- 
   player_data %>% 
-  mutate(date = as.Date(paste(year, 日付, sep="/")))
+  mutate(date = as.Date(paste(year, 日付, sep="/"))) 
 
-write.csv(player_data, "player_gameresult.csv", 
+## 変な改行を除く
+player_data <- 
+  player_data %>% 
+  mutate(詳細 = str_replace_all(詳細, "\n", ""))
+
+write.csv(player_data, "../data/player_gameresult.csv", 
           quote=FALSE, row.names=FALSE)
 
 ```

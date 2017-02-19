@@ -1,0 +1,51 @@
+打席ごとのデータを作る
+====
+
+## 概要
+試合ごとのデータの"詳細"列をほぐして、打席ごとのデータにする。
+
+```{r}
+library(dplyr)
+library(data.table)
+library(stringr)
+
+## データの読み込み
+gameresult_table <- fread("../data/player_gameresult.csv")
+
+gameresult_atbat_table <- 
+  gameresult_table %>% 
+  select(date, 対戦, 球場, 名前, 背番, 詳細)
+
+gameresult_atbat_table %>% head
+```
+
+tidyrとかで上手くできそうな気がするけど、諦める。
+```{r}
+make_atbat_result <-  function(dataframe){
+  game_date <- dataframe$date
+  name <- dataframe$名前
+  number <- dataframe$背番
+  detail <- dataframe$詳細 
+  
+  atbat_result_list <- str_split(string = detail, pattern = "_")
+  data.frame(atbat = atbat_result_list[[1]]) %>% 
+    mutate(date = game_date) %>%
+    mutate(name = name) %>% 
+    mutate(背番 = number) %>%
+    mutate(打席番号 = 1:nrow(.))
+}
+
+make_atbat_result(gameresult_atbat_table[1,])
+
+table_size = nrow(gameresult_atbat_table_head)
+player_atbat_result = data.frame()
+
+for(row in 1:table_size){
+  print(paste("row: ", row, " table_size: ", table_size))
+  player_atbat_result_tmp <- make_atbat_result(gameresult_atbat_table[row, ])
+  player_atbat_result <- 
+    rbind(player_atbat_result, player_atbat_result_tmp)
+}
+player_atbat_result
+
+```
