@@ -37,7 +37,7 @@ make_atbat_result <-  function(dataframe){
 
 make_atbat_result(gameresult_atbat_table[1,])
 
-table_size = nrow(gameresult_atbat_table_head)
+table_size = nrow(gameresult_atbat_table)
 player_atbat_result = data.frame()
 
 for(row in 1:table_size){
@@ -46,6 +46,11 @@ for(row in 1:table_size){
   player_atbat_result <- 
     rbind(player_atbat_result, player_atbat_result_tmp)
 }
-player_atbat_result
+
+player_atbat_result %>% dim
+
+## 保存
+player_atbat_result %>% write.csv("player_atbat_result.csv", quote=FALSE, row.names=FALSE)
+
 
 ```
