@@ -12,10 +12,13 @@ http://lcom.sakura.ne.jp/NulData/2015/Central/G/f/25_stat.htm
 - [終了] チーム, 年度別の選手名と背番号データの作成
  - URLを作成するため
  - data/year_player_table.csv
-- [レビュー中] 年度,選手別の打席結果htmlのダウンロード
+- [終了] 年度,選手別の打席結果htmlのダウンロード
  - data/player_gameresult.csv
  - 移籍した場合は? 
+  - 同姓同名がいたら詰む
+  　- 2007年以降なら問題無し
  - プレーオフは?
+ 　- データに入っていないから、気にしなくていい
 - 打席ごとのデータに整形
  - data/player_gameresult.csvで、詳細列をなんやかんやして別の行にする
 
